@@ -35,14 +35,12 @@
 1. Create a HTTP endpoints
 2. Externalize Configuration
 3. Expose Application Metrics and Information
-4. Calling Another Service
-5. Deploy Microservices at Scale with Docker and ECS/EKS
-6. Cluster Management  
+4. Deploy Microservices at Scale with Docker and ECS/EKS
+5. Cluster Management  
 Service Discovery  
-Failure Mangement : Cluster self healing  
-Circuit Breaker pattern  
-Load Balancing
-7. Logging, Tracing, Metric Monitoring, CI/CD, Configuraiton management
+Failure Mangement, Circuit Breaker pattern, Load Balancing
+
+6. Logging, Tracing, Metric Monitoring, CI/CD, Configuraiton management
 
 
 # Preparation
