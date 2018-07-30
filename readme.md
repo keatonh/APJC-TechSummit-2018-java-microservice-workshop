@@ -59,6 +59,7 @@ Eclipse IDE is optional as your dev IDE for studying this workshop but not manda
 3. Maven (3.5.3)
 4. AWS CLI : https://docs.aws.amazon.com/cli/latest/userguide/installing.html
 5. Docker 
+6. MySql Client 
 
 **Optional**  
 - Eclipse Oxygen 3 or above
@@ -275,11 +276,160 @@ curl localhost:8080/beans
 <hr>
 
 ## Lab-3
+- Splitting projects into services
+
+### Table of Contents
+1. [Run your appplications](#Run-your-appplications)  
+1.1 [Compile and run 2 applications](#Compile-and-run-2-applications)   
+1.2 [Test your HTTP endpoints with CURL](#Test-your-HTTP-endpoints-with-CURL)
+2. [Create a Mysql DB](#Create-a-Mysql-DB)  
+2.1 [Create an Aurora MySQL instance](#Create-an-Aurora-MySQL-instance)  
+2.2 [Install MySQL Client and Create a new user](#Install-MySQL-Client-and-Create-a-new-user)  
+2.3 [Configure ParameterStore in System Manager](#Configure-ParameterStore-in-System-Manager)
+3. [Create a Dynamo Database table](#Create-a-Dynamo-Database-table)  
+3.1 [Create a Table](#Create-a-Table)  
+3.2 [Run and check](#Run-and-check)
+
+### Run your appplications
+
+#### Compile and run 2 applications
+We have 2 projects (module-03-ddb, modlue-03-mysql).
+Comple and run both application
+
+```
+cd <work_space>/module-03-ddb
+mvn compile package -Dmaven.test.skip=true
+java -jar target/module-03-ddb-0.1.0.jar
+```
+
+```
+cd <work_space>/module-03-mysql
+mvn compile package -Dmaven.test.skip=true
+java -jar target/module-03-mysql-0.1.0.jar
+```
+
+#### Test your HTTP endpoints with CURL
+
+```
+
+```
+
+### Create a Mysql DB
+
+#### Create an Aurora MySQL instance
+
+1. Open the Amazon RDS console : https://console.aws.amazon.com/rds/home?region=us-east-1#
+2. Select Aurora for MySQL 5.7 Database engine and select the 
+3. Create a DB instance configuring database name, username, password.
+4. Remember your master username and password to perform next step
+	
+![Mysql](./imgs/03/01.png)
+
+
+5. Create database in configuration page (for example, workshop)
+	
+Name your Aurora database as TSA-Workshop, and keep the rest of the values as default.
+- Select db instances of your choice (e.g. db.t2.micro)
+- Keep the default multi-AZ
+- Cluster name: TSA-Workshop-Cluster
+- Database name: workshop
+- Speicfy master user id and password and remember it
+- Make sure that the database is publicly accessible.
+- Keep everything else as default and then launch the Aurora database.
+- At your left panel, click on the 'instances' menu. You should see that RDS is creating two database instances for you (one reader and writer role respectively).
+
+6. Wait until completing the creation of Aurora for MySQL 
+
+Endpoint looks like this - "tsa-workshop.ctdltt3xxxx.us-east-1.rds.amazonaws.com"
+	
+7. Check Endpoint and Security Group
+	
+![Checking Aurora](./imgs/03/02.png)
+	
+8. Change Security Group configuration, if you need.
+9. Check connectivity from your local computer (if you don't have any MySQL client, please install it)
+
+#### Install MySQL Client and Create a new user
+
+1. Install MySQL using Brew
+2. Login MySQL with master id & password
+```
+brew install mysql
+
+mysql -h <endpoint of your instance> -u <master username> -p
+```
+	
+2. Create user and it's privilege using following SQL commands(use MySQL client in your computer)
+
+```
+mysql> create user 'demouser'@'%' identified by '12345678'; -- Creates the user
+mysql> grant all on workshop.* to 'demouser'@'%'; -- Gives all the privileges to the new user on the newly created 
+```
+
+3. Check the tables, there is no table yet.
+
+```
+show tables;
+
+```
+
+
+#### Configure ParameterStore in System Manager 
+
+AWS Systems Manager Parameter Store provides secure, hierarchical storage for configuration data management and secrets management. You can store data such as passwords, database strings, and license codes as parameter values.
+Complete the following tasks to configure application parameters for ParameterStore (default region is us-east-1)
+
+1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/
+2. Change values in ParameterStore for database URL, database username and password
+
+- datasource.url = jdbc:mysql://<your_db_endpoint>/workshop?&useSSL=false
+- datasource.username = demouser
+- datasource.password = 12345678
+	
+![Parameter Store](./imgs/03/03.png)
+
+3. Add datasource.url, datasource.username, datasource.password for your Aurora instance. 
+4. Specify values as you configured in previous steps.
+
+
+#### 2.3 Run your application again 
+Run Module-03-mysql.
+After running, check tables of workshop database in MySQL Client
+
+```
+user workshop;
+
+show tables;
+
+select * from User;
+
+```
+
+### Create a Dynamo Database table
+
+#### Create a Table
+
+1. Create a "PhotoInfo" table
+2. Specify "id" as a primary partition key
+
+![DDB](./imgs/03/04.png)
+
+#### Run and check
+Run Module-03-ddb and check it again
+
+<hr>
+
 
 
 <hr>
+
 ## Lab-4
 
 <hr>
+
 ## Lab-5
+
+<hr>
+
+## Lab-6
 
