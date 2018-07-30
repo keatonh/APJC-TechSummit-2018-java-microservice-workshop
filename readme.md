@@ -5,8 +5,8 @@
 
 # Table of Contents
 1. [Overview of this workshop](#Overview-of-this-worksho)  
-1.1 [Basic Steps of Migration](#Basic-Steps-of-Migration)
-1.2 [Practical Steps for Java application migration](#Practical-Steps-for-Java application-migration)
+1.1 [Basic Steps of Migration](#Basic-Steps-of-Migration)  
+1.2 [Practical Steps for Java application migration](#Practical-Steps-for-Java-application-migration)
 2. [Preparation](#Preparation)  
 2.1 [Full installation(Recommeded)](#Full-installation)  
 2.2 [Using AMI](#Use-an-AMI)
