@@ -79,8 +79,10 @@ Eclipse IDE is optional as your dev IDE for studying this workshop but not manda
 5. Lab-5 : Create a ECR
 6. Lab-6 : Logging and Service Discovery (optional)
 
+<hr>
 
 ## Lab-1
+- Create a HTTP endpotins 
 
 ### Table of Contents
 1. [First application](#First-application)  
@@ -200,11 +202,84 @@ java -jar target/module-01-0.1.0.jar
 
 ```
 
+<hr>
 
 ## Lab-2
 
+-Externalize Configuration / Expose Application Metrics and information
+
+### Table of Contents
+1. [Run application (module-02)](#Run-application-(module-02))
+2. [Externalize Configuration](#Externalize-Configuration)     
+2.1 [Configure AWS CLI(Optional)](#Configure-AWS-CLI(Optional))  
+2.2 [Configure ParameterStore in System Manager](#Configure-ParameterStore-in-System-Manager)  
+2.3 [Run your application again](#Run-your-application-again)  
+3. [Expose Application Metrics and Information](#Expose-Application-Metrics-and-Information)  
+3.1 [Check Application Info](#Check-Application-Info)
+
+### Run application (module-02)
+
+```
+cd module-02
+mvn compile package -Dmaven.test.skip=true
+java -jar target/module-02-0.1.0.jar
+```
+ 
+- **You definitely got error above, it is because you don't have Parameter Stores**
+- You need to create this following step 2
+
+1. Configure Your Parameter Store
+2. Check your EC2 roles (If you have errors after creating parameters in Parameter Store, then check it)
+ 
+### Externalize Configuration 
+
+
+#### Configure AWS CLI(Optional)
+If you didn't configure AWS CLI, then install or uprate your AWS CLI 
+**If you configured AWS CLI configuraiton before, then skip this 1.1 
+
+```
+> aws configure
+> AWS Access Key ID [None]: [your key]
+> AWS Secret Access Key [None]: [your key]
+> AWS region : [your region]
+```
+
+#### Configure ParameterStore in System Manager 
+- AWS Systems Manager Parameter Store provides secure, hierarchical storage for configuration data management and secrets management. You can store data such as passwords, database strings, and license codes as parameter values.
+Complete the following tasks to configure application parameters for ParameterStore (select your region, for example, us-east-1, ap-southeast-1 and so forth)
+
+
+1. Open the System Manager Cosole and go to Parameter Store
+2. Create parameters in ParameterStore for database URL, database username and password in your region
+3. Specify **datasource.url** as **jdbc:h2:file:~/WorkshopDB**
+4. Specify **datasource.username** as **sa**
+5. Specify **datasource.password** as **12345678**
+
+![Parameter Store](./imgs/02/01.png)
+
+#### Run your application again
+
+Check your EC2 role, if you have errors after creating parameters in Parameter Store.
+
+### Expose Application Metrics and Information
+We are using "spring-boot-starter-actuator", please check application metrics and information using following command
+
+#### Check Application Info
+
+```
+curl localhost:8080/heath
+curl localhost:8080/beans
+```
+
+<hr>
+
 ## Lab-3
 
+
+<hr>
 ## Lab-4
 
+<hr>
 ## Lab-5
+
