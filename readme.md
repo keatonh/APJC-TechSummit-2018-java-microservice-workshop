@@ -405,7 +405,8 @@ select * from User;
 
 ### Create a Dynamo Database table
 
-#### Create a Table
+#### Create a Table (optional)
+- Application (module-03-ddb) will create PhotoInfo table automatically.
 
 1. Create a "PhotoInfo" table
 2. Specify "id" as a primary partition key
@@ -415,11 +416,13 @@ select * from User;
 #### Run and check
 Run Module-03-ddb and check it again
 
+```
+curl localhost:8080/workshop/photos/all
+
+```
+
 <hr>
 
-
-
-<hr>
 
 ## Lab-4
 
